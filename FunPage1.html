@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Compass</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat|Island+Moments|Nunito' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+ <link rel="stylesheet" href="mystyle.css">
+ <!-- import  script source -->
+ <script src="jsfun.js"defer></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- css for the designing the game -->
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+  
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Open Sans", sans-serif;
+  }
+  body {
+      display: flex;
+      padding: 0 10px;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #e5e5ea;
+  }
+  .container {
+      display: flex;
+      width: 850px;
+      gap: 70px;
+      padding: 60px 40px;
+      background: #fff;
+      border-radius: 10px;
+      align-items: flex-end;
+      justify-content: space-between;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  .hangman-box img {
+      user-select: none;
+      max-width: 270px;
+  }
+  .hangman-box h1 {
+      font-size: 1.45rem;
+      text-align: center;
+      margin-top: 20px;
+      text-transform: uppercase;
+  }
+  .game-box .word-display {
+      gap: 10px;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+  }
+  .word-display .letter {
+      width: 28px;
+      font-size: 2rem;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      border-bottom: 3px solid #000;
+  }
+  .word-display .letter.guessed {
+      margin: -40px 0 35px;
+      border-color: transparent;
+  }
+  .game-box h4 {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 15px;
+  }
+  .game-box h4 b {
+      font-weight: 600;
+  }
+  .game-box .guesses-text b {
+      color: #685fb3;
+  }
+  .game-box .keyboard {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      justify-content: center;
+  }
+  :where(.game-modal, .keyboard) button {
+      color: #fff;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 4px;
+      text-transform: uppercase;
+      background: #5E63BA;
+  }
+  .keyboard button {
+      padding: 7px;
+      width: calc(100% / 9 - 5px);
+  }
+  .keyboard button[disabled] {
+      pointer-events: none;
+      opacity: 0.6;
+  }
+  :where(.game-modal, .keyboard) button:hover {
+      background: #82a5c9;
+  }
+  .game-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 0 10px;
+      transition: opacity 0.4s ease;
+  }
+  .game-modal.show {
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 0.4s 0.4s ease;
+  }
+  .game-modal .content {
+      padding: 30px;
+      max-width: 420px;
+      width: 100%;
+      border-radius: 10px;
+      background: #fff;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  .game-modal img {
+      max-width: 130px;
+      margin-bottom: 20px;
+  }
+  .game-modal img[src="images/victory.gif"] {
+      margin-left: -10px;
+  }
+  .game-modal h4 {
+      font-size: 1.53rem;
+  }
+  .game-modal p {
+      font-size: 1.15rem;
+      margin: 15px 0 30px;
+      font-weight: 500;
+  }
+  .game-modal p b {
+      color: #465c8c;
+      font-weight: 600;
+  }
+  .game-modal button {
+      padding: 12px 23px;
+  }
+  @media (max-width: 782px) {
+      .container {
+          flex-direction: column;
+          padding: 30px 15px;
+          align-items: center;
+      }
+      .hangman-box img {
+          max-width: 200px;
+      }
+      .hangman-box h1 {
+          display: none;
+      }
+      .game-box h4 {
+          font-size: 1rem;
+      }
+      .word-display .letter {
+          margin-bottom: 35px;
+          font-size: 1.7rem;
+      }
+      .word-display .letter.guessed {
+          margin: -35px 0 25px;
+      }
+      .game-modal img {
+          max-width: 120px;
+      }
+      .game-modal h4 {
+          font-size: 1.45rem;
+      }
+      .game-modal p {
+          font-size: 1.1rem;
+      }
+      .game-modal button {
+          padding: 10px 18px;
+      }
+  }
+  </style>
+</head>
+<!-- display the nav bar-->
+<body style="display: flex; flex-direction: column; min-height: 50vh;width: 100%;">
+  <nav class="navbar navbar-expand-lg shadow" style="background-color: #fff;width: 100%;">
+   <div class="container"style="width: 100%;">
+          <a class="navbar-brand" href="#">
+            <img src="logo1.png" style="height: 120px;"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  mb-2 mb-lg-0">
+              <!-- nav bars with 2 jquery -->
+              <li class="nav-item"> <a class="nav-link active" aria-current="page" href="index.html" style="font-family: 'Nunito'">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="indexjQ.html" style="font-family: 'Nunito'">HOMEjq</a></li>
+              <li class="nav-item"><a class="nav-link" href="About us.html" style="font-family: 'Nunito'">About Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="achievements.html" style="font-family: 'Nunito'">achievements</a></li>
+              <li class="nav-item"><a class="nav-link" href="srvices.html" style="font-family: 'Nunito'"> Our services</a></li>
+              <li class="nav-item"><a class="nav-link" href="Log in.html" style="font-family: 'Nunito'">Registration</a></li>
+              <li class="nav-item"><a class="nav-link" href="Contact us.html" style="font-family: 'Nunito'">Contact Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="Questionnaire.html" style="font-family: 'Nunito'">Questionnaire</a></li>
+              <li class="nav-item"><a class="nav-link" href="quesJQ.html" style="font-family: 'Nunito'">QuestionnaireJQ</a></li>
+              <li class="nav-item"><a class="nav-link" href="funpage1.html" style="font-family: 'Nunito'">funpage</a></li></li>
+            </ul>
+            <!-- <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> -->
+          </div>
+        </div>
+      </nav>
+      <br/> <br/> 
+      <!-- container fro displaying head , comments of correct and hint -->
+      <div class="container py-3" style = "text-align: center;">
+        <div class="game-modal">
+            <div class="content">
+                <img src="#" alt="gif">
+                <h4>Game Over!</h4>
+                <p>The correct word was: <b>rainbow</b></p>
+                <button class="play-again">Play Again</button>
+            </div>
+        </div>
+        <!-- container to display the image and name og game -->
+        <div class="container">
+            <div class="hangman-box">
+                <img src="home pic Large.png" draggable="false" alt="hangman-img">
+                <h1>survices GAME !</h1>
+            </div>
+            <!-- game box for displayng the keyboard and the word -->
+            <div class="game-box">
+                <ul class="word-display"></ul>
+                <h4 class="hint-text">Hint: <b></b></h4>
+                <h4 class="guesses-text">Incorrect guesses: <b></b></h4>
+                <div class="keyboard"></div>
+            </div>
+        </div>
+        <script>
+        // script for words regarding to webpage content 
+        const wordList = [
+            {
+              //words of the services in the website 
+                word: "photographer",
+                hint: "person who takes photos."
+            },
+            {
+                word: "photos",
+                hint: "collections that taken by phtographer ."
+            },
+            {
+                word: "tutor",
+                hint: "a private teacher, typically one who teaches a single pupil or a very small group."
+            },
+            {
+                word: "writer",
+                hint: "a person who has written something or who writes in a particular way."
+            },
+            {
+                word: "translator",
+                hint: "a person who translates from one language into another, especially as a profession."
+            },
+            {
+                word: "designer",
+                hint: "a person who plans the look or workings of something prior to it being made, by preparing drawings or plans."
+            },
+            {
+                word: "programmer",
+                hint: "a person who writes computer programs."
+            },
+            {
+                word: "manager",
+                hint: "a person responsible for controlling or administering an organization or group of staff."
+            },
+            {
+                word: "artist",
+                hint: "a person who creates paintings or drawings as a profession or hobby."
+            },
+           
+
+        ];</script></div>
+             <br/>  <br><br><br>
+             <br/><br/> 
+             <!-- diplay the footer-->
+             <footer style="text-align: center; font-family: 'Times New Roman', Times, serif; padding: 3px; background-color: rgb(16, 2, 35); color: white;width: 100%;">
+                 <!-- text color , padding and background color -->
+              <div class="contact"> <a class="contact-link " href="Contact us.html" style="text-decoration: none; color:#fff"> Contact us</a> </div>
+              <a href = "mailto: CampusCompass@example.com">or through CampusCompass@gmail.com</a>
+             </div>
+             </div>
+             </footer>
+    </body>
+    </html>

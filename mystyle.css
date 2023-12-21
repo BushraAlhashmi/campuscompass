@@ -1,0 +1,45 @@
+
+* {
+    font-family:  'Nunito', Tahoma, Geneva, Verdana, sans-serif;
+}
+.navbar-nav .nav-item .nav-link {
+    color: rgb(48, 39, 84);
+    font-family: 'Courier New', Courier, monospace;
+    margin-left: 15px;
+    font-size: 18px;
+}
+.navbar-nav .nav-item .nav-link:hover {
+    background-color: rgb(30, 29, 56);
+}
+
+.navbar-nav .nav-item .nav-link:visited {
+    color: rgb(58, 38, 69);
+}
+
+.navbar-nav .nav-item .nav-link:active {
+    color: rgb(33, 24, 65);
+}
+
+.box {
+    display: inline-block;
+    width: 33%;
+    height: 300px;
+}
+.inside-boxes {position: absolute;
+                font-size: 24px;
+            text-align: center;
+            margin-top: 50px;
+        margin-left: 20px;
+        margin-right: 20px;}
+
+
+.footer {background-color: brown;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+height: 50px;}
+
+.footer .contact .contact-link:hover {background-color: palevioletred;}
